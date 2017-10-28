@@ -1,8 +1,8 @@
 <h2>The logger</h2>
 
 <p>
-    Number of attempts: <strong>34</strong>
-    with <strong>12</strong> correct guesses.
+    Number of attempts: <strong>{{ total }}</strong>
+    with <strong>{{ rightGuesses }}</strong> correct guesses.
 </p>
 
 <h3>Last 10 attempts</h3>
@@ -17,11 +17,11 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td class='right'>10</td>
-            <td class='right'>49</td>
-            <td class='center'>YES</td>
-            <td>2017-01-01 15:55</td>
+        <tr *ngFor="let guess of guesses">
+            <td class='right'>{{ guess.min }}</td>
+            <td class='right'>{{ guess.max }}</td>
+            <td class='center'>{{ guess.success ? "YES!" : "nope" }}</td>
+            <td>{{ guess.timestamp | date:"H:m:s d-M-y" }}</td>
         </tr>
     </tbody>
 </table>
