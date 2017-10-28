@@ -1,28 +1,56 @@
-# HcxApp
+# HclApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
+This project was generated with **Angular CLI**.
 
-## Development server
+To run the project, `cd` into its folder and run:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```
+npm i
+npm start
+```
 
-## Code scaffolding
+Then log to  `http://localhost:4200/`.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+# Notes
 
-## Build
+The application is a MVP that is not complete, but it's functional. 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+PLEASE BEAR IN MIND that I am accustomed to deeply document in JSDOC *all*
+my software, here you will find lack of docs because of the time I had allotted
+for the test.
 
-## Running unit tests
+# Database
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+NO Database support was included. There is a persistence layer that mocks a
+rudimental interaction, in which `localStorage` has been used.
 
-## Running end-to-end tests
+# Structure 
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+Uder `src/app` you'll find all the implementation.
 
-## Further help
+`classes` contain classes mainly for interfacing with the data tier. So any
+data structure and model goes here.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+`interfaces` contains come contracts that should define the behaviour of other
+classes. In particular, I've tried to shape what a pair of services should
+implement.
+
+`services` contains a pair of VERY rudimentary application of those interfaces.
+One service `AttemptLoggerInterface` logs user attempts, the other is responsible
+for the "business logic" (guessing a number).
+
+`shared` contains **shared components**. I often use a `SharedModule` for any
+reusable UI component.
+
+There is also a `BigNumberComponent`. The logic here is that the BigNumberComponent
+is **only a UI member** who doesn't know nothing about the services and all the
+logic around.
+It displays a number according to some conditions and emits an event, period.
+
+`ui` contains the two main components.
+
+`ChooserComponent` uses `BigNumberComponent` implementing the communication with
+the persistence layer.
+
+`LoggerComponent` doesn't know anything about ChooserComponent. It uses a built
+in Observable of the persistence service to be notified about any change.
