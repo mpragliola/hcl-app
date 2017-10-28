@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { IAttemptPersistence } from '../interfaces/services/iattempt-persistence';
 import { LogAttempt } from '../classes/log-attempt';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class AttemptLoggerService implements IAttemptPersistence {
+
+  updateStream$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor() {
       this.setStore([]);
@@ -13,10 +16,21 @@ export class AttemptLoggerService implements IAttemptPersistence {
     let guesses = this.getStore();
     guesses.push(logAttempt);
     this.setStore(guesses);
+    this.updateStream$
+        .next(logAttempt);
   }
 
-  attempts(): any {
-    return this.getStore();
+  getTotal() {
+      return this.getStore().length;
+  }
+
+  getStats() {
+    let guesses = this.getStore();
+    return guesses.reduce(function (a,b) { return a + (b.success ? 1: 0); }, 0);
+  }
+
+  attempts(n:number|null) {
+    return this.getStore().slice(-n);
   }
 
   getStore() {
