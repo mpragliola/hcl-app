@@ -1,0 +1,16 @@
+<h3>The number component</h3>
+
+This little guy is unaware of what the Gods above are planning. It just makes
+you choose a number.
+
+<div class="widget">
+    <div class="number">
+        <input type="number" name="" [(ngModel)]="userNumber">
+    </div>
+
+    <div class="guess">
+        <button 
+            [disabled]="!isValueInRange()"
+            (click)="guess()">Let me guess!</button>
+    </div>
+</div>

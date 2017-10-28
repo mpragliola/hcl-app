@@ -1,0 +1,29 @@
+<h2>The chooser</h2>
+
+<p>
+    The mighty AI has choosen a number between 
+    <strong>{{ minRange }}</strong>
+    and <strong>{{ maxRange }}</strong>.
+    Those values are set in <code>/environment</code> :)
+</p>
+
+<p>
+    Tired of guessing? Maybe you'd want to <a href="" (mouseenter)="cheat=true">cheat</a>?
+</p>
+
+<div class="cheat" *ngIf="cheat">
+    Psst... see the number to guess shown in your <code>console.log()</code>
+</div>
+
+<app-big-number 
+    (guessEvent)="guessAttempt($event)"
+    [min]="minRange"
+    [max]="maxRange">
+</app-big-number>
+
+<div *ngIf="showFail" class="fail">
+    The mighty BigNumber says your guess is <strong>FAIL</strong>
+</div>
+<div *ngIf="showSuccess" class="success">
+    The mighty BigNumber says your guess is <strong>WIN</strong>
+</div>
